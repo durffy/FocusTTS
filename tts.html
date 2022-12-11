@@ -1,0 +1,62 @@
+<!-- tts.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+
+  <!-- Include the Bootstrap CSS file -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+  <!-- Include the TTS CSS file -->
+  <link rel="stylesheet" href="tts.css">
+
+  <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+
+</head>
+<body>
+  <!-- Embed a YouTube video as the background -->
+  <iframe src="https://www.youtube.com/embed/a5S-YhfjZdI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></iframe>
+
+  <!-- Container for the text input, TTS output, and control elements -->
+
+    <div class="row mt-3">
+      <div class="col-md-8 offset-md-2 text-center">
+        
+
+      </div>
+    </div>
+
+    <!-- Control elements -->
+    <div class="row mt-3">
+      <div class="col-md-8 offset-md-2 text-center">
+        <input type="text" id="tts-input" class="form-control text-center">
+        <div id="tts-output" class="form-control text-center"></div>
+        <!-- <select id="tts-voice-select" class="ml-3" onchange="onVoiceChange(event)"></select> -->
+        <button id="tts-play-pause" class="btn btn-primary ml-3" onclick="toggleTTS()">Play/Pause</button>
+        
+        <!-- TTS Speed -->
+        <div class="form-group">
+          <label for="tts-speed">Speed:</label>
+          <select id="tts-speed" class="form-control" onchange="onSpeedChange()">
+            <option value="0.5">0.5x</option>
+            <option value="1" >1x</option>
+            <option value="1.5" selected >1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+  <!-- Include the TTS JavaScript file -->
+  <script src="tts.js"></script>
+</body>
+</html>

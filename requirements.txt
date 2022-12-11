@@ -1,0 +1,13 @@
+provide the css, html, and js in separate files with a tts.* naming convention
+
+an embeded youtube video full screen in the background using src https://www.youtube.com/embed/a5S-YhfjZdI
+
+a textbox to enter text for tts
+tts reading one sentence at a time,
+tts voice selection options,
+options to adjust the speed of the tts up and down (eg. 1x, 1.5x, 2x), 
+pause and play button for the tts to pause and play
+
+Output the text the TSS reads to webpage text with yellow text with a black shadow
+
+css using bootstrap
