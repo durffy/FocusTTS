@@ -1,199 +1,49 @@
-// Global variables for the TTS
-// Initialize the global variables for the TTS
-var ttsInput = document.getElementById("tts-input");
-var ttsOutput = document.getElementById("tts-output");
-var ttsVoiceSelect = document.getElementById("tts-voice-select");
-var ttsSpeed = document.getElementById("tts-speed");
-var ttsPlayPause = document.getElementById("tts-play-pause");
-var ttsVoices = window.speechSynthesis.getVoices();
-var isPlaying = false;
-var currentSentenceIndex = 0;
-var currentSentence = "";
-var currentVoice = ttsVoices[0].name;
-var currentSpeed = 1;
-var sentences;
+// Function to read text aloud using TTS
+function readText(text) {
+  // Create a new TTS instance
+  const tts = new SpeechSynthesisUtterance();
 
-// Initialize the TTS
-function initTTS() {
-  // Set up the global variables for the TTS
-  ttsInput = document.getElementById("tts-input");
-  ttsOutput = document.getElementById("tts-output");
-  ttsVoiceSelect = document.getElementById("tts-voice-select");
-  ttsSpeed = document.getElementById("tts-speed");
-  ttsPlayPause = document.getElementById("tts-play-pause");
+  // Set the text and voice of the TTS instance
+  tts.text = text;
+  tts.voice = speechSynthesis.getVoices()[0];
 
-  // Get the available voices from the TTS library
-  ttsVoices = window.speechSynthesis.getVoices();
+  // Add an event listener for when TTS finishes speaking
+  tts.addEventListener('end', () => {
+    // Code for handling the end of TTS goes here
+  });
 
-  // Populate the voice select element with the available voices
-  for (var i = 0; i < ttsVoices.length; i++) {
-    var voice = ttsVoices[i];
-    var option = document.createElement("option");
-    option.value = voice.name;
-    option.innerHTML = voice.name;
-    ttsVoiceSelect.appendChild(option);
-  }
-
-  // Set the default voice to the first available voice
-  currentVoice = ttsVoices[0].name;
-
-  // Set the default speed to 1x
-  currentSpeed = 1;
-
-  // Set the isPlaying flag to false
-  isPlaying = false;
+  // Start speaking the text
+  speechSynthesis.speak(tts);
 }
 
-// This function will be called when the user changes the input text
-function onInputChange() {
-  // Get the input text
-  var input = ttsInput.value;
-
-  // Split the input text into sentences
-  sentences = input.split(/[.!?]/g);
-
-  // Set the current sentence index to 0
-  currentSentenceIndex = 0;
-
-  // Set the current sentence to the first sentence
-  currentSentence = sentences[currentSentenceIndex];
-
-  // Set the text of the output element to the current sentence
-  ttsOutput.innerHTML = currentSentence;
+// Pause the TTS
+function pauseTTS() {
+  speechSynthesis.pause();
 }
 
-// This function will be called when the user changes the TTS voice
-function onVoiceChange() {
-  // Update the current voice to the selected voice
-  currentVoice = ttsVoiceSelect.value;
+// Resume the TTS
+function resumeTTS() {
+  speechSynthesis.resume();
 }
 
+// Get references to elements on the page
+const ttsInput = document.getElementById('tts-input');
+const ttsPause = document.getElementById('tts-pause');
+const ttsPlay = document.getElementById('tts-play');
+const ttsOutput = document.getElementById('tts-output');
 
-// This function will be called when the user changes the TTS speed
-function onSpeedChange() {
-  // Get the selected speed from the tts-speed element
-  var speed = ttsSpeed.options[ttsSpeed.selectedIndex].value;
+// Add event listeners to control TTS
+ttsPause.addEventListener('click', () => {
+  pauseTTS();
+});
 
-  // Set the current speed to the selected speed
-  currentSpeed = parseFloat(speed);
+ttsPlay.addEventListener('click', () => {
+  resumeTTS();
+});
 
-  // If the TTS is currently playing, update the speed of the current utterance
-  if (isPlaying) {
-    window.speechSynthesis.pause();
-    window.speechSynthesis.cancel();
-    var utterance = new SpeechSynthesisUtterance(currentSentence);
-    for (var i = 0; i < ttsVoices.length; i++) {
-      if (ttsVoices[i].name === currentVoice) {
-        utterance.voice = ttsVoices[i];
-        break;
-      }
-    }
-    utterance.rate = currentSpeed;
-    utterance.onend = onSentenceEnd;
-    window.speechSynthesis.speak(utterance);
-  }
-}
-
-// This function will be called when a sentence finishes speaking
-function onSentenceEnd() {
-  // Increment the current sentence index
-  currentSentenceIndex++;
-
-  // If there are more sentences, speak the next sentence
-  if (currentSentenceIndex < sentences.length) {
-    // Set the current sentence to the next sentence
-    currentSentence = sentences[currentSentenceIndex];
-
-    // Set the text of the output element to the current sentence
-    ttsOutput.innerHTML = currentSentence;
-
-    // Create a new utterance for the current sentence
-    var utterance = new SpeechSynthesisUtterance(currentSentence);
-
-    // Set the voice of the utterance to the current voice
-    for (var i = 0; i < ttsVoices.length; i++) {
-      if (ttsVoices[i].name === currentVoice) {
-        utterance.voice = ttsVoices[i];
-        break;
-      }
-    }
-
-    // Set the speed of the utterance to the current speed
-    utterance.rate = currentSpeed;
-
-    // Set the onend event listener for the utterance
-    utterance.onend = onSentenceEnd;
-
-    // Speak the current sentence
-    window.speechSynthesis.speak(utterance);
-  }
-  // If there are no more sentences, stop the TTS
-  else {
-    // Stop the current utterance
-    window.speechSynthesis.cancel();
-
-    // Update the play/pause button text
-    ttsPlayPause.innerHTML = "Play";
-
-    // Set the isPlaying flag to false
-    isPlaying = false;
-  }
-}
-
-// This function will be called when the user clicks the Play/Pause button
-function toggleTTS() {
-  // If the TTS is currently playing, pause it
-  if (isPlaying) {
-    // Stop the current utterance
-    window.speechSynthesis.cancel();
-
-    // Update the play/pause button text
-    ttsPlayPause.innerHTML = "Play";
-
-    // Set the isPlaying flag to false
-    isPlaying = false;
-  }
-  // If the TTS is not currently playing, start it
-  else if (!isPlaying){
-    // Get the input text
-    var input = ttsInput.value;
-
-    // Split the input text into sentences
-    sentences = input.split(/[.!?]/g);
-
-    // Set the current sentence index to 0
-    currentSentenceIndex = 0;
-
-    // Set the current sentence to the first sentence
-    currentSentence = sentences[currentSentenceIndex];
-
-    // Set the text of the output element to the current sentence
-    ttsOutput.innerHTML = currentSentence;
-
-    // Create a new utterance for the current sentence
-    var utterance = new SpeechSynthesisUtterance(currentSentence);
-
-    // Set the voice of the utterance to the current voice
-    for (var i = 0; i < ttsVoices.length; i++) {
-      if (ttsVoices[i].name === currentVoice) {
-        utterance.voice = ttsVoices[i];
-        break;
-      }
-      
-    }
-
-    // Set the speed of the utterance to the current speed
-    utterance.rate = currentSpeed;
-
-    // Set the onend event listener for the utterance
-    utterance.onend = onSentenceEnd;
-    //TODO: I think this hass something to do with the utterarnces?
-    // Start speaking the utterance
-    window.speechSynthesis.speak(utterance);
-
-    // Update the play/pause button text
-    ttsPlayPause.innerHTML = "Pause";
-
-
-  }
-}
+// Read text aloud as it is entered in the textbox
+ttsInput.addEventListener('input', () => {
+  const input = ttsInput.value;
+  readText(input);
+  ttsOutput.innerText = input;
+});

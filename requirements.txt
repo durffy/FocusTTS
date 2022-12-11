@@ -1,31 +1,12 @@
 provide the css, html, and js in separate files with a tts.* naming convention
-
-an embeded youtube video full screen in the background using src https://www.youtube.com/embed/a5S-YhfjZdI
-
-a textbox to enter text for tts
-tts reads one sentence at a time,
-tts voice selection options,
-options to adjust the speed of the tts up and down (eg. 1x, 1.5x, 2x), 
-pause and play button for the tts to pause and play
-
-Output the text the TSS reads to webpage text with yellow text with a black shadow
-
 css using bootstrap
+an embeded youtube video full screen in the background using src https://www.youtube.com/embed/a5S-YhfjZdI
+a textbox to enter text for tts
+tts reads one sentence at a time
+Pause button for the tts to Pause
+Play button for the tts to Play
+Output the text the TSS reads to text with yellow text with a black shadow on a transparent background
 
 
-    The URL of the Uberduck TTS API endpoint where requests can be sent to synthesize text to speech.: "https://api.uberduck.ai/speak"
-    The specific parameters and format that the API expects for the request (e.g. the format of the text to be synthesized, the voice to use, the speed, etc.)."Voice can be specified by providing either voice + model_type, or
-voicemodel_uuid.
-
-Pace, duration, and pitch are only supported for voices
-that support these controls (a very small subset of voices).
-
-You can check if a given voice supports controls by querying /voice-data or
-/voices//detail and looking at the controls boolean in
-the reponse."
-
-    The format of the response returned by the API (e.g. the audio format, any metadata, etc.).
-
-    Any authentication or API key requirements for accessing the Uberduck TTS API.
-    
-    Any other relevant details or documentation about the Uberduck TTS API that would be necessary for using it with this JavaScript code.
+features
+provide the css, html, and js in separate files with a tts.* naming convention,css using bootstrap,an embeded youtube video full screen in the background using src https://www.youtube.com/embed/a5S-YhfjZdI,a textbox to enter text for tts,tts reads one sentence at a time,Pause button for the tts to Pause,Play button for the tts to Play,Output the text the TSS reads to text with yellow text with a black shadow,
