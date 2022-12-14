@@ -19,6 +19,7 @@
           ></iframe>
         </div>
       </div>
+<<<<<<< Updated upstream
       <div class="row">
         <div class="col-12 p-0">
           <textarea id="tts-input" class="form-control" rows="3"></textarea>
@@ -33,6 +34,27 @@
       <div class="row mt-3">
         <div class="col-12 p-1">
           <pre id="tts-output" class="p-3"></pre>
+=======
+    </div>
+
+    <!-- Control elements -->
+    <div class="row mt-3">
+      <div class="col-md-8 offset-md-2 text-center">
+        <input type="text" id="tts-input" class="form-control text-center">
+        <div id="tts-output" class="form-control text-center"></div>
+        <!-- <select id="tts-voice-select" class="ml-3" onchange="onVoiceChange(event)"></select> -->
+        <button id="tts-play-pause" class="btn btn-primary ml-3" onclick="toggleTTS()">Play/Pause</button>
+        
+        <!-- TTS Speed -->
+        <div class="form-group">
+          <label for="tts-speed">Speed:</label>
+          <select id="tts-speed" class="form-control" onchange="onSpeedChange()">
+            <option value="0.5">0.5x</option>
+            <option value="1" >1x</option>
+            <option value="1.5" selected>1.5x</option>
+            <option value="2">2x</option>
+          </select>
+>>>>>>> Stashed changes
         </div>
       </div>
     </div>
