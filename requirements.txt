@@ -1,7 +1,7 @@
 provide the css, html, and js in separate files with a tts.* naming convention
 css using bootstrap
 an embeded youtube video full screen in the background using src https://www.youtube.com/embed/a5S-YhfjZdI
-a textbox to enter text for tts
+a textbox to enter text for tts 
 tts reads one sentence at a time
 Pause button for the tts to Pause
 Play button for the tts to Play

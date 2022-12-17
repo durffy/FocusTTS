@@ -1,49 +1,41 @@
-// Function to read text aloud using TTS
-function readText(text) {
-  // Create a new TTS instance
-  const tts = new SpeechSynthesisUtterance();
+const input = document.getElementById('tts-input');
+const pauseButton = document.getElementById('tts-pause-button');
+const playButton = document.getElementById('tts-play-button');
+const output = document.getElementById('tts-output');
 
-  // Set the text and voice of the TTS instance
-  tts.text = text;
-  tts.voice = speechSynthesis.getVoices()[0];
+let paused = false;
+let speechRateTSS = 1.5;
 
-  // Add an event listener for when TTS finishes speaking
-  tts.addEventListener('end', () => {
-    // Code for handling the end of TTS goes here
-  });
-
-  // Start speaking the text
-  speechSynthesis.speak(tts);
-}
-
-// Pause the TTS
 function pauseTTS() {
-  speechSynthesis.pause();
+  paused = true;
 }
 
-// Resume the TTS
-function resumeTTS() {
-  speechSynthesis.resume();
+function playTTS() {
+  paused = false;
+  readNextSentence();
 }
 
-// Get references to elements on the page
-const ttsInput = document.getElementById('tts-input');
-const ttsPause = document.getElementById('tts-pause');
-const ttsPlay = document.getElementById('tts-play');
-const ttsOutput = document.getElementById('tts-output');
+function readNextSentence() {
+  if (paused) {
+    return;
+  }
 
-// Add event listeners to control TTS
-ttsPause.addEventListener('click', () => {
-  pauseTTS();
-});
+  const sentences = input.value.split('. ');
+  if (sentences.length === 0) {
+    return;
+  }
 
-ttsPlay.addEventListener('click', () => {
-  resumeTTS();
-});
+  const nextSentence = sentences.shift();
+  input.value = sentences.join('. ');
+  output.textContent = nextSentence;
 
-// Read text aloud as it is entered in the textbox
-ttsInput.addEventListener('input', () => {
-  const input = ttsInput.value;
-  readText(input);
-  ttsOutput.innerText = input;
-});
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(nextSentence);
+  utterance.rate = speechRateTSS;
+  synth.speak(utterance);
+
+  setTimeout(readNextSentence, 1000);
+}
+
+pauseButton.addEventListener('click', pauseTTS);
+playButton.addEventListener('click', playTTS);
